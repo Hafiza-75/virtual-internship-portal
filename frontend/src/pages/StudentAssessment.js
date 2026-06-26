@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import API from "../services/api";
-
-
 
 
 // Animated Dotted Loading Spinner Component

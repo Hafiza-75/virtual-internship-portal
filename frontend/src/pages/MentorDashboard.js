@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Sidebar from "../components/Sidebar";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 
