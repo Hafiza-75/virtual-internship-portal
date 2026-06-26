@@ -36,7 +36,7 @@ const Auth = () => {
         }
 
         try {
-            const res = await API.post("login/", {
+            const res = await API.post("/api/login/", {
                 email: loginForm.email,
                 password: loginForm.password
             });
@@ -89,7 +89,7 @@ const Auth = () => {
         }
 
         try {
-            const res = await API.post("register/", regForm);
+            const res = await API.post("/api/register/", regForm);
             alert(res.data.message || "Registration Successful!");
             
             // Store token if returned
