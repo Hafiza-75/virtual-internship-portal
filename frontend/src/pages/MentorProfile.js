@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import Sidebar from "../components/Sidebar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import API from "../services/api";
 
 export default function MentorProfile() {
   const [skills, setSkills] = useState([]);
@@ -21,7 +22,7 @@ export default function MentorProfile() {
   // 1. Memoize fetchMentorInfo using useCallback
   const fetchMentorInfo = useCallback(async () => {
     try {
-      const res = await axios.get(`http://127.0.0.1:8000/api/user/?email=${email}`);
+      const res = await API.get(`/api/user/?email=${email}`);
       setMentorInfo({
         name: res.data.name || "",
         email: res.data.email || "",
@@ -35,7 +36,7 @@ export default function MentorProfile() {
   // 2. Memoize fetchSkills using useCallback
   const fetchSkills = useCallback(async () => {
     try {
-      const res = await axios.get(`http://127.0.0.1:8000/api/get-skills/?email=${email}`);
+      const res = await API.get(`/api/get-skills/?email=${email}`);
       setSkills(res.data.skills || []);
     } catch (err) {
       console.error("Error fetching skills:", err);
@@ -59,7 +60,7 @@ export default function MentorProfile() {
     setLoading(true);
     
     try {
-      await axios.post("http://127.0.0.1:8000/api/update-skills/", {
+      await API.post("/api/update-skills/", {
         email: email,
         skills: updatedSkills
       });
@@ -77,7 +78,7 @@ export default function MentorProfile() {
     const updatedSkills = skills.filter(s => s !== skillToRemove);
     
     try {
-      await axios.post("http://127.0.0.1:8000/api/update-skills/", {
+      await API.post("/api/update-skills/", {
         email: email,
         skills: updatedSkills
       });

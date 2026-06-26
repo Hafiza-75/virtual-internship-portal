@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Sidebar from "../components/Sidebar";
+import API from "../services/api";
+
 
 export default function TaskBasedProjectView() {
   const { projectId } = useParams();
@@ -30,9 +32,7 @@ export default function TaskBasedProjectView() {
       setLoading(true);
       setError(null);
       
-      const res = await axios.get(
-        `http://127.0.0.1:8000/api/projects/?email=${email}`
-      );
+      const res = await API.get(`/api/projects/?email=${email}`);
       
       const projectData = res.data.find(p => p._id === projectId);
       if (!projectData) {
@@ -126,7 +126,7 @@ export default function TaskBasedProjectView() {
       updatedSolutions[taskIndex] = solution;
       setTaskSolutions(updatedSolutions);
       
-      await axios.post("http://127.0.0.1:8000/api/project/save-task/", {
+      await API.post("/api/project/save-task/", {
         project_id: projectId,
         task_index: taskIndex,
         task_solution: solution
@@ -148,7 +148,7 @@ export default function TaskBasedProjectView() {
     
     try {
       const savePromises = tasks.map((task, index) => {
-        return axios.post("http://127.0.0.1:8000/api/project/save-task/", {
+        return API.post("/api/project/save-task/", {
           project_id: projectId,
           task_index: index,
           task_solution: taskSolutions[index] || ""
@@ -174,7 +174,7 @@ export default function TaskBasedProjectView() {
     setIsSavingAll(true);
     try {
       const savePromises = tasks.map((task, index) => {
-        return axios.post("http://127.0.0.1:8000/api/project/save-task/", {
+        return API.post("/api/project/save-task/", {
           project_id: projectId,
           task_index: index,
           task_solution: taskSolutions[index] || ""
@@ -199,7 +199,7 @@ export default function TaskBasedProjectView() {
     try {
       // Submit each task for evaluation
       const evaluationPromises = tasks.map((task, index) => {
-        return axios.post("http://127.0.0.1:8000/api/project/evaluate-task/", {
+        return API.post("/api/project/evaluate-task/", {
           project_id: projectId,
           task_index: index,
           task_solution: taskSolutions[index],

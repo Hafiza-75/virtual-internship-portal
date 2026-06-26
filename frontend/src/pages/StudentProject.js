@@ -2,6 +2,8 @@ import React, { useEffect, useState, useCallback } from "react";
 import Sidebar from "../components/Sidebar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import API from "../services/api";
+
 
 // Animated Dotted Loading Spinner Component
 const LoadingSpinner = () => (
@@ -45,9 +47,7 @@ export default function StudentProject() {
   const fetchProjects = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await axios.get(
-        `http://127.0.0.1:8000/api/projects/?email=${email}`
-      );
+      const res = await API.get(`/api/projects/?email=${email}`);
 
       const data = res.data || [];
 

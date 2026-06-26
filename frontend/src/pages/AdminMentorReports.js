@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "../components/Sidebar";
+import API from "../services/api";
 
 const LoadingSpinner = () => (
   <div style={spinnerStyles.container}>
@@ -33,9 +34,9 @@ export default function AdminMentorReports() {
     try {
       setLoading(true);
       const [mentorsRes, feedbacksRes, statsRes] = await Promise.all([
-        axios.get("http://127.0.0.1:8000/api/admin/mentor-stats/"),
-        axios.get("http://127.0.0.1:8000/api/admin/mentor-feedbacks/"),
-        axios.get("http://127.0.0.1:8000/api/admin/platform-stats/")
+        API.get("/api/admin/mentor-stats/"),
+        API.get("/api/admin/mentor-feedbacks/"),
+        API.get("/api/admin/platform-stats/")
       ]);
       setMentors(mentorsRes.data);
       setFeedbacks(feedbacksRes.data);
@@ -51,7 +52,7 @@ export default function AdminMentorReports() {
   const deleteFeedback = async (feedbackId) => {
     if (window.confirm("Are you sure you want to delete this feedback?")) {
       try {
-        await axios.delete(`http://127.0.0.1:8000/api/admin/mentor-feedback/delete/${feedbackId}/`);
+        await API.delete(`/api/admin/mentor-feedback/delete/${feedbackId}/`);
         setFeedbacks(feedbacks.filter(f => f.id !== feedbackId));
         alert("Feedback deleted successfully");
       } catch (err) {

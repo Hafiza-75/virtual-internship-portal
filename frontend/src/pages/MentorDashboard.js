@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import Sidebar from "../components/Sidebar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import API from "../services/api";
 
 // Animated Dotted Loading Spinner Component
 const LoadingSpinner = () => (
@@ -40,9 +41,7 @@ export default function MentorDashboard() {
   const fetchDashboardData = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await axios.get(
-        `http://127.0.0.1:8000/api/mentor/matched-projects/?email=${email}`
-      );
+      const res = await API.get(`/api/mentor/matched-projects/?email=${email}`);
       
       // All projects with match_score > 0 (any skill match)
       const allProjects = res.data.projects || [];

@@ -2,6 +2,8 @@ import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
+import API from "../services/api";
+
 
 // Loading Spinner Component
 const LoadingSpinner = () => (
@@ -78,9 +80,7 @@ export default function ProjectDetail() {
   // Fetch Single Project
   const fetchProject = useCallback(async () => {
     try {
-      const res = await axios.get(
-        `http://127.0.0.1:8000/api/projects/?email=${email}`
-      );
+      const res = await API.get(`/api/projects/?email=${email}`);
       const found = res.data.find((p) => p._id === id);
       setProject(found || null);
       if (found?.solution) {
@@ -110,9 +110,7 @@ export default function ProjectDetail() {
   const fetchAttemptHistory = useCallback(async () => {
     if (!project?.title) return;
     try {
-      const res = await axios.get(
-        `http://127.0.0.1:8000/api/project-attempts/?email=${email}&title=${project.title}`
-      );
+      const res = await API.get(`/api/project-attempts/?email=${email}&title=${project.title}`);
       setAttemptHistory(res.data.attempts || []);
     } catch (err) {
       console.error("Error fetching history:", err);
@@ -135,7 +133,7 @@ export default function ProjectDetail() {
   const autoSaveSolution = async (solutionText) => {
     if (!solutionText || solutionText === originalSolution) return;
     try {
-      await axios.post("http://127.0.0.1:8000/api/save-solution/", {
+      await API.post("/api/save-solution/", {
         id,
         solution: solutionText,
       });
@@ -164,7 +162,7 @@ export default function ProjectDetail() {
     if (window.taskSaveTimer) clearTimeout(window.taskSaveTimer);
     window.taskSaveTimer = setTimeout(async () => {
       try {
-        await axios.post("http://127.0.0.1:8000/api/save-task-solution/", {
+        await API.post("/api/save-task-solution/", {
           project_id: id,
           task_index: taskIndex,
           task_solution: value
@@ -179,7 +177,7 @@ export default function ProjectDetail() {
   const saveSolution = async () => {
     setSaving(true);
     try {
-      await axios.post("http://127.0.0.1:8000/api/save-solution/", {
+      await API.post("/api/save-solution/", {
         id,
         solution,
       });
@@ -200,7 +198,7 @@ export default function ProjectDetail() {
     }
     setLoading(true);
     try {
-      const res = await axios.post("http://127.0.0.1:8000/api/evaluate-project/", {
+      const res = await API.post("/api/evaluate-project/", {
         id: id,
         solution: solution,
       });
@@ -225,7 +223,7 @@ export default function ProjectDetail() {
     
     setReattemptLoading(true);
     try {
-      const res = await axios.post("http://127.0.0.1:8000/api/reattempt-project/", {
+      const res = await API.post("/api/reattempt-project/", {
         project_id: id,
         email: email
       });

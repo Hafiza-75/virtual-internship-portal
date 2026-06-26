@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import API from "../services/api";
+
+
+
 
 // Animated Dotted Loading Spinner Component
 const LoadingSpinner = () => (
@@ -41,9 +45,7 @@ export default function StudentAssessment() {
     const fetchHistory = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(
-          `http://127.0.0.1:8000/api/my-results/?email=${email}`
-        );
+        const res = await API.get(`/api/my-results/?email=${email}`);
         setHistory(res.data || []);
       } catch (err) {
         console.error("Error fetching history:", err);

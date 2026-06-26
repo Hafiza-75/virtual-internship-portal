@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Sidebar from "../components/Sidebar";
+import API from "../services/api";
 
 export default function MentorWorkspace() {
   const { projectId } = useParams();
@@ -94,9 +95,7 @@ export default function MentorWorkspace() {
       
       console.log("Fetching project with ID:", projectId);
       
-      const res = await axios.get(
-        `http://127.0.0.1:8000/api/mentor/project/?project_id=${projectId}&email=${email}`
-      );
+      const res = await API.get(`/api/mentor/project/?project_id=${projectId}&email=${email}`);
       setProject(res.data);
       
       // Existing feedback
@@ -176,8 +175,7 @@ export default function MentorWorkspace() {
         }
       }
       
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/mentor/submit-review/",
+      const response = await API.post("/api/mentor/submit-review/",
         requestData
       );
 

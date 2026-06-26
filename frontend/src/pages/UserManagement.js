@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "../components/Sidebar";
+import API from "../services/api";
+
 
 // Animated Dotted Loading Spinner
 const LoadingSpinner = () => (
@@ -39,7 +41,7 @@ export default function UserManagement() {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://127.0.0.1:8000/api/admin/users/");
+      const res = await API.get("/api/admin/users/");
       setUsers(res.data);
     } catch (err) {
       console.error("Error fetching users:", err);
@@ -53,7 +55,7 @@ export default function UserManagement() {
   const deleteUser = async (id) => {
     if (window.confirm("Are you sure you want to permanently remove this user from MongoDB?")) {
       try {
-        await axios.delete(`http://127.0.0.1:8000/api/admin/users/delete/${id}/`);
+        await API.delete(`/api/admin/users/delete/${id}/`);
         setUsers(users.filter((user) => user.id !== id));
         alert("User deleted successfully!");
       } catch (err) {
@@ -72,7 +74,7 @@ export default function UserManagement() {
 
     setAddingUser(true);
     try {
-      const res = await axios.post("http://127.0.0.1:8000/api/admin/users/add/", newUser);
+      const res = await API.post("/api/admin/users/add/", newUser);
       alert(res.data.message);
       setShowAddModal(false);
       setNewUser({ name: "", email: "", password: "", role: "student" });

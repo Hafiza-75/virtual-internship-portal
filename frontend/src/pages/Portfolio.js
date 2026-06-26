@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import Sidebar from "../components/Sidebar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import API from "../services/api";
+
 
 // Animated Dotted Loading Spinner
 const LoadingSpinner = () => (
@@ -54,9 +56,7 @@ export default function Portfolio() {
   const fetchPortfolio = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await axios.get(
-        `http://127.0.0.1:8000/api/portfolio/full/?email=${email}`
-      );
+      const res = await API.get(`/api/portfolio/full/?email=${email}`);
       setPortfolio(res.data);
       
       setFormData({
@@ -145,7 +145,7 @@ export default function Portfolio() {
 
   const saveProfile = async () => {
     try {
-      await axios.post("http://127.0.0.1:8000/api/portfolio/update/", {
+      await API.post("/api/portfolio/update/", {
         email: email,
         bio: formData.bio,
         skills: formData.skills,
@@ -175,7 +175,7 @@ export default function Portfolio() {
       const visibleProjects = portfolio.projects.filter(p => !hiddenProjects.includes(p.id));
       const visibleProjectIds = visibleProjects.map(p => p.id);
       
-      const res = await axios.post("http://127.0.0.1:8000/api/portfolio/generate-pdf/", {
+      const res = await await API.post("/api/portfolio/generate-pdf/", {
         email: email,
         include_projects: visibleProjectIds
       });

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "../components/Sidebar";
+import API from "../services/api";
+
 
 // Animated Dotted Loading Spinner Component
 const LoadingSpinner = () => (
@@ -41,9 +43,9 @@ export default function AdminDashboard() {
       setError(null);
       
       const [statsRes, reportsRes, analyticsRes] = await Promise.all([
-        axios.get("http://127.0.0.1:8000/api/admin/stats/"),
-        axios.get("http://127.0.0.1:8000/api/admin/reports/"),
-        axios.get("http://127.0.0.1:8000/api/analytics/admin-stats/")
+        API.get("/api/admin/stats/"),
+        API.get("/api/admin/reports/"),
+        API.get("/api/analytics/admin-stats/")
       ]);
 
       setStats(statsRes.data);
@@ -65,7 +67,7 @@ export default function AdminDashboard() {
   const generateReports = async () => {
     setGenerating(true);
     try {
-      const res = await axios.post("http://127.0.0.1:8000/api/admin/generate-reports/");
+      const res = await API.post("/api/admin/generate-reports/");
       alert(res.data.message);
       fetchData();
     } catch (err) {
@@ -80,7 +82,7 @@ export default function AdminDashboard() {
   const deleteReport = async (reportId) => {
     if (window.confirm("Are you sure you want to delete this report?")) {
       try {
-        await axios.delete(`http://127.0.0.1:8000/api/admin/reports/delete/${reportId}/`);
+        await API.delete(`/api/admin/reports/delete/${reportId}/`);
         setReports(reports.filter(r => r.id !== reportId));
         alert("Report deleted successfully");
       } catch (err) {

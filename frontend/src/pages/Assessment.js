@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import API from "../services/api";
 
 export default function Assessment() {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ export default function Assessment() {
     }
     setLoading(true);
     try {
-      const res = await axios.post("http://127.0.0.1:8000/api/generate-quiz/", form);
+      const res = await API.post("/api/generate-quiz/", form);
       if (res.data.quiz) {
         setQuestions(res.data.quiz);
         setStarted(true);
@@ -67,7 +68,7 @@ export default function Assessment() {
 
     setSubmitLoading(true);
     try {
-      const res = await axios.post("http://127.0.0.1:8000/api/submit-quiz/", {
+      const res = await API.post("/api/submit-quiz/", {
         domain: form.domain,
         level: form.level,
         questions,

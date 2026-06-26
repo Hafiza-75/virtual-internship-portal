@@ -2,6 +2,9 @@ import React, { useEffect, useState, useCallback } from "react";
 import Sidebar from "../components/Sidebar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import API from "../services/api";
+
+
 
 // Animated Dotted Loading Spinner Component
 const LoadingSpinner = () => (
@@ -49,9 +52,8 @@ export default function StudentDashboard() {
   // Fetch dashboard stats
   const fetchStats = useCallback(async () => {
     try {
-      const res = await axios.get(
-        `http://127.0.0.1:8000/api/dashboard-stats/?email=${email}`
-      );
+      const res = await API.get(`/api/dashboard-stats/?email=${email}`);
+
       setStats(res.data);
     } catch (err) {
       console.error("Error fetching stats:", err);
@@ -61,7 +63,7 @@ export default function StudentDashboard() {
   // Fetch mentor feedbacks
   const fetchFeedbacks = useCallback(async () => {
     try {
-      const res = await axios.get(`http://127.0.0.1:8000/api/student/feedback/?email=${email}`);
+      const res = await API.get(`/api/student/feedback/?email=${email}`);
       setFeedbacks(res.data.feedbacks || []);
     } catch (err) {
       console.error("Error fetching feedbacks:", err);
