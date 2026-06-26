@@ -22,9 +22,19 @@ DEBUG = os.getenv('DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    '.onrender.com',      # Render domain ke liye
-    '.vercel.app',        # Vercel domain ke liye
+    '.onrender.com',
+    '.vercel.app',
     'render.com',
+    '.railway.app',  # ⭐ Railway domain ke liye
+    'virtual-backend.up.railway.app',
+    'virtual-internship-portal-production.up.railway.app',
+]
+
+# ============ CSRF TRUSTED ORIGINS ============
+CSRF_TRUSTED_ORIGINS = [
+    'https://virtual-backend.up.railway.app',
+    'https://virtual-internship-portal-production.up.railway.app',
+    'https://virtual-internship-portal.vercel.app',
 ]
 
 
@@ -131,12 +141,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Development ke liye - sab allow (temporary)
 CORS_ALLOW_ALL_ORIGINS = True
 
-# Production ke liye - specific origins (baad mein change karna)
-# CORS_ALLOWED_ORIGINS = [
-#     "https://your-frontend.vercel.app",
-#     "http://localhost:3000",
-# ]
-
 CORS_ALLOW_CREDENTIALS = True
 
 # CORS headers settings
@@ -166,6 +170,6 @@ CORS_ALLOW_HEADERS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# ============ JWT SETTINGS (Agar JWT use kar rahe hain) ============
+# ============ JWT SETTINGS ============
 JWT_SECRET = os.getenv('JWT_SECRET', 'your-jwt-secret-key')
 OPENROUTER_API_KEY = os.getenv('OPENROUTER_API_KEY', '')
