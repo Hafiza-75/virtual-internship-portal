@@ -137,20 +137,19 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-# ============ CORS SETTINGS ============
-# Development ke liye - sab allow (temporary)
-CORS_ALLOW_ALL_ORIGINS = False  # ⭐ False karein
 
-# Production ke liye - specific origins
+# ============ CORS SETTINGS ============
+CORS_ALLOW_ALL_ORIGINS = False
+
 CORS_ALLOWED_ORIGINS = [
     "https://virtual-internship-portal.vercel.app",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://virtual-internship-portal-nviz63u4o-hafiza-76.vercel.app",  # Vercel ki taraf se generate URL
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 
-# CORS headers settings
 CORS_ALLOW_METHODS = [
     'DELETE',
     'GET',
