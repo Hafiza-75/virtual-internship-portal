@@ -1,8 +1,8 @@
-FROM python:3.11-slim
+FROM python:3.12-slim
 
 WORKDIR /app
 
-# Copy requirements from backend folder
+# Copy requirements
 COPY backend/requirements.txt .
 
 # Install dependencies
