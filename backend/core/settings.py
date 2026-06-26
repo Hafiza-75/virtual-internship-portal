@@ -139,7 +139,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # ============ CORS SETTINGS ============
 # Development ke liye - sab allow (temporary)
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = False  # ⭐ False karein
+
+# Production ke liye - specific origins
+CORS_ALLOWED_ORIGINS = [
+    "https://virtual-internship-portal.vercel.app",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -164,7 +171,6 @@ CORS_ALLOW_HEADERS = [
     'x-csrftoken',
     'x-requested-with',
 ]
-
 
 # ============ DEFAULT PRIMARY KEY FIELD ============
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
