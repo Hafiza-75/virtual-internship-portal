@@ -1,12 +1,10 @@
 {
   "build": {
-    "builder": "NIXPACKS",
-    "nixpacks": {
-      "buildCommand": "cd backend && pip install -r requirements.txt",
-      "startCommand": "cd backend && gunicorn core.wsgi:application"
-    },
-    "buildpacks": [
-      "python"
-    ]
+    "builder": "DOCKERFILE",
+    "dockerfile": "Dockerfile",
+    "dockerfilePath": "backend/Dockerfile"
+  },
+  "deploy": {
+    "startCommand": "gunicorn core.wsgi:application"
   }
 }
