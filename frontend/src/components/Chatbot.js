@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import API from "../services/api";
+
 
 const Chatbot = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -44,7 +45,7 @@ const Chatbot = () => {
         setLoading(true);
 
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/chat/`, { 
+            const res = await API.post(`/api/chat/`, { 
                 message: currentInput 
             });
             
