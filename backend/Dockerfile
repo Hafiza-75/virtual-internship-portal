@@ -11,8 +11,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy source code
 COPY backend/ .
 
-# Expose port
-EXPOSE 8000
+# Expose port - Railway uses 8080
+EXPOSE 8080
 
-# Start command
-CMD ["gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Start command with port 8080
+CMD ["gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:8080"]
